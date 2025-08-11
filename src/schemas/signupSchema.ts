@@ -5,10 +5,10 @@ const studentEmailRegex = /^\d{7}@student\.ruet\.ac\.bd$/;
 const teacherEmailRegex = new RegExp(`^.+@(${departments.join('|')})\\.ruet\\.ac\\.bd$`);
 
 export const signupSchema = z.object({
-    
+
   email: z
     .string()
-    .email({message: 'Invalid email format'})
+    .email({message: 'Invalid email format'})   
     .refine(
       (val) => studentEmailRegex.test(val) || teacherEmailRegex.test(val),
       { message: 'Email must be a valid RUET student or teacher email' }
