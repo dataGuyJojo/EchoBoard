@@ -14,7 +14,7 @@ export interface ReviewRating extends Document {
   engagement: number;
   fairness: number;
   materials: number;
-  difficulty: number
+  difficulty: number;
   teaching: number;
   courseQuality: number;
   learning: number;
@@ -74,6 +74,38 @@ const ReviewRatingSchema: Schema<ReviewRating> = new Schema({
 });
 
 
+// Class schema
+
+// class interface
+export interface Class extends Document {
+  name: string;
+  teacherID: string;
+  ReviewRatings: ReviewRating[];
+  createdAt: Date;
+}
+
+// class Schema
+const ClassSchema: Schema<Class> = new Schema({
+  name: {
+    type: String,
+    required: [true, 'Name is required'],
+  },
+  teacherID: {
+    type: String,
+    required: [true, 'Teacher is required'],
+  },
+  ReviewRatings: {
+    type: [ReviewRatingSchema],
+    default: [],
+  },
+  createdAt: {
+    type: Date,
+    required: true,
+    default: Date.now,
+  },
+});
+
+
 // Updated User schema
 
 
@@ -89,7 +121,7 @@ export interface User extends Document {
   verifyCodeExpiry: Date;
   isAcceptingReviews: boolean;
 
-  reviewRatings: ReviewRating[];
+  classes: Class[];
 
   
 }
@@ -163,7 +195,8 @@ const UserSchema: Schema<User> = new mongoose.Schema({
     type: Boolean,
     default: true,
   },
-  reviewRatings: [ReviewRatingSchema],
+
+  classes: [ClassSchema]
   
 });
 
