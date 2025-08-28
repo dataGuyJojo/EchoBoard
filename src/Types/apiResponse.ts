@@ -1,5 +1,5 @@
 
-import { ReviewRating } from '@/model/User';
+import { ReviewRating } from "@/model/Review";
 export interface ApiResponse {
   success: boolean;
   message: string;

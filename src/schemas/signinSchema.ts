@@ -1,8 +1,12 @@
 import { z } from 'zod';
 import { departments } from '@/model/User';
 
-const studentEmailRegex = /^\d{7}@student\.ruet\.ac\.bd$/;
-const teacherEmailRegex = new RegExp(`^.+@(${departments.join('|')})\\.ruet\\.ac\\.bd$/`);
+// Regexes (case-insensitive)
+const studentEmailRegex = /^\d{7}@student\.ruet\.ac\.bd$/i;
+const teacherEmailRegex = new RegExp(
+  `^.+@(${departments.join('|')})\\.ruet\\.ac\\.bd$`,
+  "i"
+);
 
 export const signinSchema = z.object({
   email: z

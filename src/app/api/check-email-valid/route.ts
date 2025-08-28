@@ -2,8 +2,8 @@ import dbConnect from "@/lib/dbConnect";
 import UserModel from "@/model/User";
 import z from "zod";
 import {
-  StudentEmailValidation,
-  TeacherEmailValidation,
+  studentEmailValidation,
+  teacherEmailValidation,
 } from "@/schemas/signupSchema";
 
 // unified schema for either student or teacher email
@@ -12,8 +12,8 @@ const checkEmailValidSchema = z.object({
     .string()
     .refine(
       (val) =>
-        StudentEmailValidation.safeParse(val).success ||
-        TeacherEmailValidation.safeParse(val).success,
+        studentEmailValidation.safeParse(val).success ||
+        teacherEmailValidation.safeParse(val).success,
       {
         message: "Email must be a valid RUET student or teacher email",
       }
@@ -21,12 +21,7 @@ const checkEmailValidSchema = z.object({
 });
 
 export async function GET(request: Request) {
-  if (request.method !== "GET") {
-    return Response.json(
-      { success: false, message: "Only GET requests are allowed" },
-      { status: 405 }
-    );
-  }
+  
   await dbConnect();
 
   try {

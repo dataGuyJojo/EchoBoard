@@ -24,7 +24,7 @@ export async function POST(req: Request) {
     // check validity for student
     const roll = email.split("@")[0];
 
-    if (type === "Student" && !email.endsWith("@student.ruet.ac.bd")) {
+    if (type === "student" && !email.endsWith("@student.ruet.ac.bd")) {
       return Response.json(
         { success: false, error: "provide the varsity-given student-mail please" },
         { status: 400 }
@@ -32,7 +32,7 @@ export async function POST(req: Request) {
     }
 
     // check validity for teacher
-    if (type === "Teacher" && ((!departments.some((dept) => email.endsWith(`@${dept}.ruet.ac.bd`))) || (email === "connect.syedasifjohan@gmail.com")) ) {
+    if (type === "teacher" && ((!departments.some((dept) => email.endsWith(`@${dept}.ruet.ac.bd`))) || (email === "connect.syedasifjohan@gmail.com")) ) {
       return Response.json(
         { success: false, error: "provide the varsity-given teacher-mail please" },
         { status: 400 }
@@ -63,8 +63,8 @@ export async function POST(req: Request) {
       verifyCode: verifyCode,
       verifyCodeExpiry: expiryDate,
       type: type,
-      roll: type === "Student" ? roll : undefined, 
-      isAcceptingReviews: type === "Teacher" ? true : false,
+      roll: type === "student" ? roll : undefined, 
+      isAcceptingReviews: type === "teacher" ? true : false,
       reviewRatings: []
     }).save();
 

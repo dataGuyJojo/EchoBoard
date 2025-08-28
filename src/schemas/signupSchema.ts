@@ -1,10 +1,14 @@
 import { z } from 'zod';
 import { departments } from '@/model/User';
 
-const studentEmailRegex = /^\d{7}@student\.ruet\.ac\.bd$/;
-const teacherEmailRegex = new RegExp(`^.+@(${departments.join('|')})\\.ruet\\.ac\\.bd$|connect\\.syedasifjohan@gmail\\.com$`) ;
+// Regexes (case-insensitive)
+const studentEmailRegex = /^\d{7}@student\.ruet\.ac\.bd$/i;
+const teacherEmailRegex = new RegExp(
+  `^.+@(${departments.join('|')})\\.ruet\\.ac\\.bd$`,
+  "i"
+);
 
-export const StudentEmailValidation = z
+export const studentEmailValidation = z
   .string()
   .email({ message: 'Invalid email format' })
   .refine(
@@ -12,7 +16,7 @@ export const StudentEmailValidation = z
     { message: 'Email must be a valid RUET student email' }
   );
 
-export const TeacherEmailValidation = z
+export const teacherEmailValidation = z
   .string()
   .email({ message: 'Invalid email format' })
   .refine(
