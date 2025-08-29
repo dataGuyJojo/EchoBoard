@@ -48,7 +48,7 @@ export async function POST(req: NextRequest) {
     });
 
     // link class to teacher
-    await UserModel.findByIdAndUpdate(user.id, {
+    await UserModel.findByIdAndUpdate(user._id, {
       $push: { classes: newClass._id },
     });
 
