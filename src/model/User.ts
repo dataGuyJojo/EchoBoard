@@ -52,12 +52,12 @@ const UserSchema: Schema<User> = new Schema({
       validator: function (email: string) {
         const studentEmailRegex = new RegExp(
           `^\\d{7}@student\\.ruet\\.ac\\.bd$`
-        );
+        ) || "jjohan357@gmail.com";
         if (studentEmailRegex.test(email)) return true;
 
         const teacherEmailRegex = new RegExp(
           `^.+@(${departments.join("|")})\\.ruet\\.ac\\.bd$`
-        );
+        ) || "connect.syedasifjohan@gmail.com";
         return teacherEmailRegex.test(email);
       },
       message: "Please use a valid RUET email address",
@@ -93,8 +93,11 @@ const UserSchema: Schema<User> = new Schema({
   classes: [{ type: mongoose.Schema.Types.ObjectId, ref: "Class" }],
 });
 
+// const UserModel =
+//   (mongoose.models.User as mongoose.Model<User>) ||
+//   mongoose.model<User>('User', UserSchema);
+// const UserModel = mongoose.models.User as mongoose.Model<User>  || mongoose.model<User>('User', UserSchema);
 const UserModel =
-  (mongoose.models.User as mongoose.Model<User>) ||
-  mongoose.model<User>("User", UserSchema);
-
+  mongoose.models?.User as mongoose.Model<User> ||
+  mongoose.model<User>('User', UserSchema);
 export default UserModel;

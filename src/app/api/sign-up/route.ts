@@ -1,3 +1,4 @@
+// src/app/api/sign-up/route.ts
 import dbConnect from "@/lib/dbConnect";
 import User from "@/model/User";
 
@@ -8,8 +9,8 @@ import UserModel from "@/model/User";
 import { departments } from "@/model/User";
 
 export async function POST(req: Request) {
+  await dbConnect();
   try {
-    await dbConnect();
 
     const { name, email, password, type } = await req.json();
 
@@ -79,14 +80,14 @@ export async function POST(req: Request) {
       } else {
         return Response.json({
           success: false,
-          error: "Error sending verification email",
+          error: "Error sending verification email form sign-up route",
         }, { status: 500 });
       }
     }
   } catch (error) {
     console.log("Error creating user: ❌", error);
     return Response.json(
-      { success: false, error: "Error creating user" },
+      { success: false, error: "Error creating user 🔴" },
       { status: 500 }
     );
   }

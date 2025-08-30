@@ -9,6 +9,7 @@ import { ClassModel } from "@/model/Class";
 import UserModel from "@/model/User";
 
 export async function DELETE(req: NextRequest) {
+  await dbConnect();
   try {
     const session = await getServerSession(authOptions);
     if (!session || !session.user) {
@@ -20,7 +21,6 @@ export async function DELETE(req: NextRequest) {
 
     const user: User = session.user as User;
 
-    await dbConnect();
 
     const { searchParams } = new URL(req.url);
     const reviewUniqueId = searchParams.get("_id");

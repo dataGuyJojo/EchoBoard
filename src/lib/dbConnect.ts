@@ -1,34 +1,27 @@
+// src/lib/dbConnect.ts
 import mongoose from "mongoose";
 
 
 type ConnectionObject = {
-    isConnecte?: number;
+  isConnected?: number;
 };
 
-const connection : ConnectionObject = {};
+const connection: ConnectionObject = {};
 
-export async function dbConnect() : Promise<void> {
-    if (connection.isConnecte) {
-        console.log("Already connected to database");
-        return;
-    }
+export async function dbConnect(): Promise<void> {
+  if (connection.isConnected) {
+    console.log("Already connected to database");
+    return;
+  }
 
-
-    try {
-        const db = await mongoose.connect(process.env.MONGODB_URI || "", {});
-        connection.isConnecte = db.connections[0].readyState;
-        console.log("Connected to database successfully ✅");
-        
-    } catch (error) {
-        console.log("Error connecting to database: ❌", error);
-
-        process.exit(1);
-    }
-   
+  try {
+    const db = await mongoose.connect(process.env.MONGODB_URI || "");
+    connection.isConnected = db.connections[0].readyState;
+    console.log("Connected to database successfully ✅");
+  } catch (error) {
+    console.error("Error connecting to database ❌", error);
+    process.exit(1);
+  }
 }
 
 export default dbConnect;
-
-
-
-

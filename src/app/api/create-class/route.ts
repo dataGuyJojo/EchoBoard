@@ -8,6 +8,7 @@ import { ClassModel } from "@/model/Class"; // adjust path if needed
 import UserModel from "@/model/User";
 
 export async function POST(req: NextRequest) {
+  await dbConnect();
   try {
     const session = await getServerSession(authOptions);
     if (!session || !session.user) {
@@ -17,7 +18,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    await dbConnect();
+   
 
     const body = await req.json();
     const { classCode, className, series, section } = body;
