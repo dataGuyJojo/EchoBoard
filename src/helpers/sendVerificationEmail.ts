@@ -1,8 +1,9 @@
 // src/helpers/sendVerificationEmail.ts
-import { resend } from "@/lib/resend";
 import VerificationEmail from "../../emails/verificationEmail";
 import { ApiResponse } from "@/Types/apiResponse";
 import { render } from '@react-email/render'; // Import render function
+
+import nodemailer from 'nodemailer';
 
 export const sendVerificationEmail = async (
   email: string,
@@ -10,16 +11,31 @@ export const sendVerificationEmail = async (
 ): Promise<ApiResponse> => {
   try {
     // Render the React component to a static HTML string
-    const emailHtml = render(VerificationEmail({ email, otp: verifyCode }));
 
-    const emailResponse = await resend.emails.send({
-      from: "onboarding@resend.dev",
-      to: email,
-      subject: "EchoBoard-Verification Code",
-      react: emailHtml, // Pass the HTML string here
+
+    const transporter = nodemailer.createTransport({
+     secure: true,
+      host: 'smtp.gmail.com',
+      port: 465,
+      auth: {
+        user:process.env.NODEMAILER_USER,
+        pass:process.env.NODEMAILER_PASSWORD,
+      }
     });
 
-    console.log("Resend email response:", emailResponse);
+
+// get the html format of email
+    const emailHtml = await render(VerificationEmail({ email, otp: verifyCode }));
+
+    transporter.sendMail({
+      from: process.env.NODEMAILER_USER,
+      to: email,
+      subject: "Echoboard - Verify your email",
+      text: `Your Verification code: ${verifyCode}`,
+      html: emailHtml
+    })
+
+    
 
     return {
       success: true,
