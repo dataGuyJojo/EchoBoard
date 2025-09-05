@@ -26,7 +26,7 @@ export const authOptions: NextAuthOptions = {
                 await dbConnect();
                 try {
                    const user = await UserModel.findOne({
-                        email: credentials.identifier.email,
+                        email: credentials.email,
                     });
 
                     if (!user) {
@@ -67,6 +67,8 @@ export const authOptions: NextAuthOptions = {
                 token.isVerified = user.isVerified;
                 token.isAcceptingReviews = user.isAcceptingReviews;
             }
+            // log token
+            console.log("JWT token from callback: ", token);
             return token;
         },
         async session({ session, token }) {
@@ -89,7 +91,7 @@ export const authOptions: NextAuthOptions = {
     session: {
         strategy: "jwt",
     },
-    secret: process.env.NEXT_AUTH_SECRET,
+    secret: process.env.NEXTAUTH_SECRET,
     
 
 } 

@@ -55,12 +55,13 @@ export default function VerifyEmailPage() {
         router.replace(`/sign-in`);
       }
     } catch (error) {
-      console.log("error in signing-up: ", error);
+      console.log("error in varifying: ", error);
       const axiosError = error as AxiosError<ApiResponse>;
       // let errorMessage = axiosError.response?.data.message || "Something went wrong";
       toast.error(
         axiosError.response?.data.message || "Something went wrong 🔴"
       );
+      
     } finally {
       setIsSubmitting(false);
     }

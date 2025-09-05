@@ -20,7 +20,7 @@ import { Button } from "@/components/ui/button"
 
 const SignUp = () => {
   
-const [email, setEmail] = useState("");
+// const [email, setEmail] = useState("");
 const [backendMessage, setBackendMessage] = useState("");
 const [isSubmitting, setIsSubmitting] = useState(false);
 const router = useRouter();

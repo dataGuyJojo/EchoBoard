@@ -8,16 +8,19 @@ export async function middleware(request: NextRequest) {
   // we need token and current url of user
   const token = await getToken({ req: request });
   const currentUrl = request.nextUrl;
+  console.log("token: ", token);
+
+  
 
   if (token && (
     currentUrl.pathname.startsWith("/sign-in") ||
     currentUrl.pathname.startsWith("/sign-up") ||
-    currentUrl.pathname.startsWith("/verify")||
-    currentUrl.pathname.startsWith("/")
+    currentUrl.pathname.startsWith("/verify")
   )) {
     return NextResponse.redirect(new URL("/dashboard", request.url));
 
   }
+
 
   if (!token && (
     currentUrl.pathname.startsWith("/dashboard")
@@ -30,5 +33,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/sign-in", "/sign-up", "/", "/dashboard/:path*", "/verify/:path*"],
+  matcher: ["/sign-in", "/sign-up", "/dashboard/:path*", "/verify/:path*"],
 };
