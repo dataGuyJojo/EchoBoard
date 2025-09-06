@@ -6,7 +6,7 @@ export { default } from "next-auth/middleware";
 // This function can be marked `async` if using `await` inside
 export async function middleware(request: NextRequest) {
   // we need token and current url of user
-  const token = await getToken({ req: request });
+  const token = await getToken({ req: request , secret: process.env.NEXTAUTH_SECRET});
   const currentUrl = request.nextUrl;
   console.log("token: ", token);
 

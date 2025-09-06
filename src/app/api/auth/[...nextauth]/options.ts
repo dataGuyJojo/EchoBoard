@@ -64,17 +64,20 @@ export const authOptions: NextAuthOptions = {
                 token._id = user._id?.toString();
                 token.name = user.name;
                 token.type = user.type;
+                token.email = user.email;
                 token.isVerified = user.isVerified;
                 token.isAcceptingReviews = user.isAcceptingReviews;
             }
             // log token
-            console.log("JWT token from callback: ", token);
+            // console.log("JWT token from callback: ", token);
             return token;
         },
         async session({ session, token }) {
            if (token) {
             session.user._id = token._id;
             session.user.name = token.name;
+            session.user.type = token.type;
+            session.user.email = token.email;
             session.user.isVerified = token.isVerified;
             session.user.isAcceptingReviews = token.isAcceptingReviews;
             
